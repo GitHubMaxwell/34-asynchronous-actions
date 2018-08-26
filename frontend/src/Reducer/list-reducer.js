@@ -23,8 +23,8 @@ export const readItem = () => {
     return dispatch => {
         const url = 'https://lab14-max.herokuapp.com/api/v1/cats'
         superagent.get(url)
-        .then(payload => {
-            return dispatch({type: READ_ITEM, payload})
+        .then(response => {
+            return dispatch({type: READ_ITEM, payload : response.body})
         })
     }
 }
@@ -66,7 +66,7 @@ export default (state=initialState,action) => {
 
     switch(type) {
         case 'CREATE_ITEM' : return [...state,payload]
-        case 'READ_ITEM' : return [...payload.body]
+        case 'READ_ITEM' : return [...payload]
         case 'UPDATE_ITEM' : return state.map(item => {
             return item._id === payload._id ? payload : item
         })
