@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from 'react';
+import Form from '../Form/Form.js';
 import { connect } from 'react-redux';
-import { readItem, deleteItem, updateItem } from '../../Reducer/list-reducer.js'
+import { readItem, deleteItem } from '../../Reducer/list-reducer.js'
 
 class List extends Component {
     constructor(props) {
         super(props)
-        // put the updateId
         this.state = {
             updateId : ''
         }
@@ -18,7 +18,7 @@ class List extends Component {
     }
 
     updateMode(event) {
-        // console.log('update Mode: ',event.target);
+        // console.log('update Mode: ',this.state.updateId);
         let updateId = event.target.id;
 
         if(!this.state.updateId) {
@@ -27,7 +27,7 @@ class List extends Component {
             })
         } else {
             this.setState({
-                update : ''
+                updateId : ''
             })
         }
     }
@@ -45,9 +45,10 @@ class List extends Component {
                     {this.props.list.map(list => {
                         return <li className="todoItem" id={list._id} key={list._id} onDoubleClick={this.updateMode}>
                             <h3>{list.name}</h3>
-                            <p>{list._id}</p>
+                            <p>{list.color}</p>
+                            {/* <p>{list._id}</p> */}
                             <input type="button" value="Delete" name={list._id} onClick={this.deleteItem}/>
-                            {this.state.updateId === list._id && this.props.children}
+                            {this.state.updateId === list._id ? <Form updateId={this.state.updateId}/> : null}
                         </li>
                     })}
                 </ul>
@@ -60,12 +61,9 @@ const mapStateToProps = state => ({
     list : state
 })
 
-// have to put update in the child form
-// onDoubleClick
 const mapDispatchToProps = (dispatch) => ({
     readItem : () => dispatch(readItem()),
     deleteItem : (payload) => dispatch(deleteItem(payload)),
-    updateItem : (payload) => dispatch(updateItem(payload))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(List)
