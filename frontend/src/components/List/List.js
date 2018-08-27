@@ -11,6 +11,8 @@ class List extends Component {
         }
         this.deleteItem = this.deleteItem.bind(this)
         this.updateMode = this.updateMode.bind(this)
+        this.exitUpdateMode = this.exitUpdateMode.bind(this)
+
     }
 
     componentDidMount() {
@@ -18,7 +20,6 @@ class List extends Component {
     }
 
     updateMode(event) {
-        // console.log('update Mode: ',this.state.updateId);
         let updateId = event.target.id;
 
         if(!this.state.updateId) {
@@ -30,6 +31,11 @@ class List extends Component {
                 updateId : ''
             })
         }
+    }
+    exitUpdateMode() {
+        this.setState({
+            updateId : ''
+        })
     }
 
     deleteItem(event) {
@@ -46,9 +52,8 @@ class List extends Component {
                         return <li className="todoItem" id={list._id} key={list._id} onDoubleClick={this.updateMode}>
                             <h3>{list.name}</h3>
                             <p>{list.color}</p>
-                            {/* <p>{list._id}</p> */}
                             <input type="button" value="Delete" name={list._id} onClick={this.deleteItem}/>
-                            {this.state.updateId === list._id ? <Form updateId={this.state.updateId}/> : null}
+                            {this.state.updateId === list._id ? <Form exitUpdateMode={this.exitUpdateMode} updateId={this.state.updateId}/> : null}
                         </li>
                     })}
                 </ul>

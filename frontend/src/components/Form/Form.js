@@ -7,25 +7,14 @@ class Form extends Component {
         super(props)
         this.addItem = this.addItem.bind(this)
         this.exitUpdate = this.exitUpdate.bind(this)
-
     }
 
     exitUpdate() {
-        // conditional show this button in the render() below
-        console.log('exit update')
-        // this.props.updateId
-        // set it to 
-        // setState({
-        //     updateId: ''
-        // })
-
+        this.props.exitUpdateMode();
     }
 
     addItem(event) {
         event.preventDefault()
-        // this conditional isnt going to work for all the times / if you double click and then start making a new / maybe not since this form has two instance in dashboard and only the one inside List is being passed updateId on the props
-        // it works
-        // works because in Dashboard there are two completely different instances of the Form component, one being passed props and one not
 
         if(this.props.updateId) {
             let name = event.target.name.value;
@@ -52,7 +41,6 @@ class Form extends Component {
     }
     render() {
         return (
-            // add X button to set updateId to '' to get out of update mode
             <Fragment>
                 <div className="container">
                     {this.props.updateId ? <h2>Update Cat</h2> : <h1>Enter Cats!</h1> }

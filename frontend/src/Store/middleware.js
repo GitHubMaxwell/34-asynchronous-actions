@@ -1,5 +1,3 @@
-// add reporter and thunk middlware to project
-
 export const reporter = store => next => action => {
     console.log('dispatching action: ', action)
     let result = next(action)
@@ -8,16 +6,22 @@ export const reporter = store => next => action => {
   }
 
 
-export const formCheck = store => next => action => {
-  console.log('formCheck action.payload: ',action.payload)
-    // if(action.type === 'CREATE_ITEM' && (!action.payload.color || !action.payload.name)) {
-      if(action.type === 'CREATE_ITEM'){
-      console.log('formCheck CREATE_ITEM: ',action.payload)
+// export const formCheck = store => next => action => {
+//   console.log('formCheck action.payload: ',action.payload)
+//   console.log('formCheck action: ',action)
 
-        // alert('You have to enter both a name and color')
-    } else {
-      console.log('formCheck not CREATE_ITEM next action')
+//   //NOT getting action type except READ_ITEM on page load
 
-        return next(action)
-    }
-  }
+//     // if(action.type === 'CREATE_ITEM' && (!action.payload.color || !action.payload.name)) {
+
+//       if(action.type === 'CREATE_ITEM'){
+//       console.log('name CREATE_ITEM: ',action.payload.name)
+//       console.log('color CREATE_ITEM: ',action.payload.color)
+//         if(!action.payload.color || !action.payload.name) {
+//         alert('You have to enter both a name and color')
+//         }
+//     } else {
+//       console.log('formCheck not CREATE_ITEM next action')
+//         return next(action)
+//     }
+//   }

@@ -1,12 +1,12 @@
 import superagent from 'superagent';
 
-// Action constants CRUD
+// Action Constants
 const CREATE_ITEM = 'CREATE_ITEM';
 const READ_ITEM = 'READ_ITEM';
 const UPDATE_ITEM = 'UPDATE_ITEM';
 const DELETE_ITEM = 'DELETE_ITEM';
 
-
+// Action Creators
 export const createItem = payload => {
 
     return dispatch => {
@@ -21,7 +21,7 @@ export const createItem = payload => {
 export const readItem = () => {
 
     return dispatch => {
-        const url = 'https://lab14-max.herokuapp.com/api/v1/cats'
+        const url = 'https://lab14-max.herokuapp.com/api/v1/cats';
         superagent.get(url)
         .then(response => {
             return dispatch({type: READ_ITEM, payload : response.body})
@@ -30,12 +30,9 @@ export const readItem = () => {
 }
 
 export const updateItem = payload => {
-    // console.log('update action payload', payload)
-
-    // my lab 14 only lets you update either color or name but not both
 
     return dispatch => {
-        const url = `https://lab14-max.herokuapp.com/api/v1/cats/${payload.id}`
+        const url = `https://lab14-max.herokuapp.com/api/v1/cats/${payload.id}`;
         superagent.put(url)
         .send(payload)
         .then(response => {
@@ -45,6 +42,7 @@ export const updateItem = payload => {
 }
 
 export const deleteItem = payload => {
+
     return dispatch => {
         const url = `https://lab14-max.herokuapp.com/api/v1/cats/${payload}`;
         superagent.delete(url)
@@ -54,15 +52,15 @@ export const deleteItem = payload => {
     }
 }
 
+// Initial State
 let initialState = [];
 
-// Reducer // has to be named reducer in a duck = the convention
-// whats the initial state supposed to be? / the model of the lab 14 code
-// you want to overwrite what the state is so in READ_ITEM you pass the array of objects in the payload instead of jus tthe objects and then in the switch statement return the [...payload]
-
+// Reducer
 export default (state=initialState,action) => {
     let {type, payload} = action;
-    // console.log('reducer payload: ',payload)
+
+    // console.log('action type: ',type)
+    // console.log('payload: ',payload)
 
     switch(type) {
         case 'CREATE_ITEM' : return [...state,payload]
@@ -74,3 +72,6 @@ export default (state=initialState,action) => {
         default : return state
     }
 }
+
+// you want to overwrite what the state is so in READ_ITEM you pass the array of objects in the payload instead of just the objects
+// in the switch statement return the [...payload]
